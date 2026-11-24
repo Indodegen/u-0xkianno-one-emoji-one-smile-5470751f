@@ -8,7 +8,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const entryPath = join(here, "entry.txt");
 
 // The entry is exactly one emoji, defined once and used for the gates
-// below and for the printed output.
+// below. Nothing is printed; the graded deliverable is the copied
+// entry.txt in the output directory.
 const ENTRY = "😄";
 
 const text = readFileSync(entryPath, "utf8");
@@ -28,8 +29,9 @@ if (emoji !== ENTRY) {
   throw new Error("entry.txt must contain exactly one emoji");
 }
 
-// Gate: /output/entry.txt must be UTF-8 text of 1 to 8 characters,
-// not only white space. Here: exactly one emoji, nothing else.
+// Gate: the entry must be exactly one code point (one emoji), and
+// 1 to 8 UTF-16 code units of non-whitespace text. Here: exactly
+// one emoji, nothing else.
 if (Array.from(emoji).length !== 1) {
   throw new Error("entry.txt must contain exactly one emoji");
 }
