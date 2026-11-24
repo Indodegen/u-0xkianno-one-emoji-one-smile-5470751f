@@ -7,6 +7,10 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const entryPath = join(here, "entry.txt");
 
+// The entry is exactly one emoji, defined once and used for the gates
+// below and for the printed output.
+const ENTRY = "😄";
+
 const text = readFileSync(entryPath, "utf8");
 
 // Single-line gate: the entry must be exactly one line. A trailing
@@ -18,6 +22,11 @@ if (/[\r\n]/.test(body)) {
 }
 
 const emoji = text.trim();
+
+// Gate: the entry file must hold exactly the one emoji defined above.
+if (emoji !== ENTRY) {
+  throw new Error("entry.txt must contain exactly one emoji");
+}
 
 // Gate: /output/entry.txt must be UTF-8 text of 1 to 8 characters,
 // not only white space. Here: exactly one emoji, nothing else.
